@@ -41,7 +41,7 @@ easy_install pyOpenSSL==0.11  #不能低于0.11版本
 python server.py
 ```
 
-### GET|POST /sign 
+### GET | POST /sign 
 
 对HTTP请求参数做符合聚易付规则的RSA数字签名
 
