@@ -1,26 +1,35 @@
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 from flask import Flask
 from flask import request
-from OpenSSL.crypto import load_privatekey, FILETYPE_PEM, sign  
+from OpenSSL import crypto 
 from urllib import quote
 import base64 
 
 app = Flask(__name__)
 
-@app.route("/sign", methods=['GET', 'POST'])
-def signService():
-    params = []
-    for arg in request.args:
-        param = '%s=%s' % (arg, request.args[arg])
-        params.append(param)
-    raw_string = "&".join(sorted(params))
-    print raw_string
+@app.route("/sign", methods=['GET','POST']) 
+def signService(): 
+    if request.method == 'POST':
+        params = request.form
+    else:
+        params = request.args
 
-    key = load_privatekey(FILETYPE_PEM, open("rsa_private_key.pem").read())  
-    content = raw_string 
-       
-    sign_string = sign(key, content, 'sha1')  
+    kv_array = []
+    for param in params:
+        kv = '%s=%s' % (param, params[param])
+        kv_array.append(kv)
+    content = "&".join(sorted(kv_array))
+
+    key = crypto.load_privatekey(crypto.FILETYPE_PEM, open("rsa_private_key.pem").read())  
+    sign_string = crypto.sign(key, content, 'sha1')  
     sign64 = base64.b64encode(sign_string)
     sign_encoded = quote(sign64)
+
+    print "content: " + content
+    print "sign: " + sign_encoded
 
     return sign_encoded
 
