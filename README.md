@@ -46,7 +46,8 @@ python server.py
 对HTTP请求参数做符合聚易付规则的RSA数字签名
 
 如：获得param1=value1&param2＝value2的RSA数字签名（已经过URLEncode）
-已GET方法为例：
+
+以GET方法为例：
 
 ```
 http://ip:5000/sign?param1=value1&param2＝value2
