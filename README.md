@@ -10,7 +10,7 @@ server-example-python
 2. 接收聚易付的订单通知
 
 # 运行需求
-1. python运行环境
+1. Python运行环境
 2. Flask
 3. pyOpenSSL>=0.11
 
